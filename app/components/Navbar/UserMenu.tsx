@@ -5,7 +5,7 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import Avatar from '../Avatar';
 import MenuItem from './MenuItem';
 
-const UserManu = () => {
+const UserMenu = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -86,4 +86,4 @@ const UserManu = () => {
     );
 }
 
-export default UserManu;
+export default UserMenu;
