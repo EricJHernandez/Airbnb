@@ -13,7 +13,7 @@ import {
 import Modal from './Modal';
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
-import Heading from '../navbar/Heading';
+import Heading from '../Heading';
 import Input from '../inputs/Input';
 import { toast } from 'react-hot-toast';
 import Button from '../Button';
@@ -21,8 +21,10 @@ import { useRouter } from 'next/navigation';
 
 const LoginModal = () => {
     const router = useRouter();
+
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+
     const [isLoding, setIsLoding] = useState(false);
 
     const {
@@ -45,18 +47,23 @@ const LoginModal = () => {
             ...data,
             redirect: false
         })
-        .then((callback) => {
-            setIsLoding(false)
-            if(callback?.ok){
-                toast.success('Logged in')
-                router.refresh();
-                loginModal.onClose();
-            }
-            if(callback?.error){
-                toast.error(callback.error)
-            }
-        })
+            .then((callback) => {
+                setIsLoding(false)
+                if (callback?.ok) {
+                    toast.success('Logged in')
+                    router.refresh();
+                    loginModal.onClose();
+                }
+                if (callback?.error) {
+                    toast.error(callback.error)
+                }
+            })
     }
+
+    const onToggle = useCallback(() => {
+        loginModal.onClose();
+        registerModal.onOpen();
+    }, [loginModal, registerModal])
 
     const bodyContent = (
         <div className='flex flex-col gap-4'>
@@ -114,17 +121,17 @@ const LoginModal = () => {
                     gap-2 
                     '>
                     <div>
-                        Already have an account?
+                        First time using Airbnb?
                     </div>
                     <div
-                        onClick={registerModal.onClose} 
+                        onClick={onToggle}
                         className='
                             text-neutral-800
                             cursor-pointer
                             hover:underline
                         '
                     >
-                        Log in
+                        Create an account
                     </div>
                 </div>
             </div>
